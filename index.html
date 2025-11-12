@@ -496,6 +496,32 @@
             color: white;
         }
 
+        .logout-button {
+            width: 100%;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        .logout-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.5);
+            background: linear-gradient(135deg, #ee5a24 0%, #ff6b6b 100%);
+        }
+
+        .logout-button:active {
+            transform: scale(0.98);
+        }
+
         /* Модальное окно выбора способа оплаты */
         .payment-modal {
             display: none;
@@ -722,6 +748,12 @@
                 padding: 10px 20px;
             }
 
+            .logout-button {
+                padding: 12px;
+                font-size: 18px;
+                margin-top: 15px;
+            }
+
             .payment-content {
                 min-width: 90%;
                 padding: 30px 25px;
@@ -835,6 +867,12 @@
                 font-size: 16px;
             }
 
+            .logout-button {
+                padding: 10px;
+                font-size: 16px;
+                margin-top: 10px;
+            }
+
             .payment-content {
                 padding: 25px 20px;
             }
@@ -918,6 +956,7 @@
                 <div class="profile-label">Статус:</div>
                 <div class="profile-role" id="profileRole">ЧЕЛОВЕК</div>
             </div>
+            <button class="logout-button" id="logoutButton">Выйти</button>
         </div>
     </div>
 
@@ -966,6 +1005,7 @@
         const productsContainer = document.getElementById('productsContainer');
         const profileContainer = document.getElementById('profileContainer');
         const onlineStatus = document.getElementById('onlineStatus');
+        const logoutButton = document.getElementById('logoutButton');
 
         let ballTop = 50;
         let direction = 'down';
@@ -1104,6 +1144,41 @@
             profileButton.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)';
         }
 
+        function logout() {
+            // Удаляем текущего пользователя из localStorage
+            localStorage.removeItem('currentUser');
+            
+            // Скрываем все элементы интерфейса
+            navPanel.classList.remove('visible');
+            mainContent.classList.remove('visible');
+            onlineStatus.classList.remove('visible');
+            
+            // Сбрасываем анимацию и показываем начальный экран
+            ball.style.display = 'block';
+            ball.classList.remove('fade-out');
+            ball.style.opacity = '1';
+            ball.style.transform = 'translate(-50%, -50%) scale(1)';
+            
+            title.classList.remove('visible');
+            title.classList.remove('moved');
+            title.style.opacity = '0';
+            title.style.display = 'block';
+            
+            startButton.classList.remove('visible');
+            startButton.style.opacity = '0';
+            startButton.style.display = 'block';
+            
+            // Сбрасываем анимацию мяча
+            ballTop = 50;
+            direction = 'down';
+            bottomTouched = false;
+            topTouched = false;
+            container.style.background = 'linear-gradient(to bottom, #ffffff 0%, #ffffff 50%, #ffffff 50%, #ffffff 100%)';
+            
+            // Перезапускаем анимацию
+            animate();
+        }
+
         window.addEventListener('load', () => {
             const savedPhone = localStorage.getItem('currentUser');
             if (savedPhone) {
@@ -1215,6 +1290,9 @@
 
         productsButton.addEventListener('click', showProductsView);
         profileButton.addEventListener('click', showProfileView);
+
+        // Обработчик кнопки выхода
+        logoutButton.addEventListener('click', logout);
 
         const paymentModal = document.getElementById('paymentModal');
         const telegramButton = document.getElementById('telegramButton');
