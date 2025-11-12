@@ -12,9 +12,9 @@
         }
 
         body {
-            overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #000;
+            overflow-x: hidden;
         }
 
         .container {
@@ -23,6 +23,7 @@
             position: relative;
             background: linear-gradient(to bottom, #ffffff 0%, #ffffff 50%, #ffffff 50%, #ffffff 100%);
             transition: background 0.8s ease;
+            overflow: hidden;
         }
 
         .ball {
@@ -132,6 +133,42 @@
                 transform: translate(-50%, -50%);
                 filter: blur(0px);
             }
+        }
+
+        /* Навигационная панель */
+        .nav-panel {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 500;
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .nav-panel.visible {
+            opacity: 1;
+        }
+
+        .nav-button {
+            padding: 12px 30px;
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
         }
 
         /* Модальное окно регистрации */
@@ -246,52 +283,6 @@
             transform: scale(0.98);
         }
 
-        /* Информация о человеке в углу */
-        .user-info {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 500;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.6s ease;
-        }
-
-        .user-info.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .user-label {
-            font-size: 20px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .user-box {
-            background: white;
-            padding: 15px 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            font-size: 18px;
-            font-weight: 700;
-            color: #333;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .user-box.admin {
-            background: white;
-            color: #ff0000;
-            font-weight: 900;
-        }
-
-        .user-box.tester {
-            background: white;
-            color: #808080;
-            font-weight: 900;
-        }
-
         /* Стили для названия в углу после регистрации */
         .title.moved {
             position: fixed;
@@ -309,21 +300,30 @@
             letter-spacing: 5px;
         }
 
-        /* Контейнер для товаров */
-        .products-container {
+        /* Основной контент после регистрации */
+        .main-content {
             position: absolute;
             top: 120px;
-            left: 30px;
+            left: 0;
+            width: 100%;
+            min-height: calc(100vh - 120px);
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            overflow-y: auto;
+            background: linear-gradient(to bottom, #ff0000 0%, #ff0000 50%, #ffd700 50%, #ffd700 100%);
+        }
+
+        .main-content.visible {
+            opacity: 1;
+        }
+
+        /* Контейнер для товаров */
+        .products-container {
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
-            opacity: 0;
-            z-index: 100;
-            transition: opacity 0.6s ease;
-        }
-
-        .products-container.visible {
-            opacity: 1;
+            justify-content: center;
         }
 
         /* Стили для товара */
@@ -333,6 +333,7 @@
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
         }
 
         .product-image {
@@ -395,6 +396,71 @@
 
         .buy-button:active {
             transform: scale(0.98);
+        }
+
+        /* Контейнер профиля */
+        .profile-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .profile-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .profile-info {
+            margin-bottom: 25px;
+        }
+
+        .profile-label {
+            font-size: 18px;
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .profile-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+        }
+
+        .profile-role {
+            font-size: 20px;
+            font-weight: 700;
+            padding: 12px 25px;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .profile-role.admin {
+            background: #ff0000;
+            color: white;
+        }
+
+        .profile-role.moder {
+            background: #0066ff;
+            color: white;
+        }
+
+        .profile-role.user {
+            background: #333;
+            color: white;
         }
 
         /* Модальное окно выбора способа оплаты */
@@ -498,10 +564,6 @@
 
         /* Адаптивные стили для мобильных устройств */
         @media (max-width: 768px) {
-            body {
-                overflow-x: hidden;
-            }
-
             .ball {
                 width: 50px;
                 height: 50px;
@@ -523,6 +585,16 @@
                 padding: 12px 30px;
                 font-size: 18px;
                 top: 65%;
+            }
+
+            .nav-panel {
+                top: 10px;
+                gap: 10px;
+            }
+
+            .nav-button {
+                padding: 10px 20px;
+                font-size: 16px;
             }
 
             .modal-content {
@@ -549,24 +621,14 @@
                 font-size: 18px;
             }
 
-            .user-info {
-                top: 15px;
-                right: 15px;
-            }
-
-            .user-label {
-                font-size: 14px;
-            }
-
-            .user-box {
-                padding: 10px 15px;
-                font-size: 14px;
+            .main-content {
+                top: 100px;
+                padding: 15px;
             }
 
             .products-container {
-                top: 100px;
-                left: 15px;
                 flex-direction: column;
+                align-items: center;
             }
 
             .product-card {
@@ -599,6 +661,26 @@
             .buy-button {
                 padding: 10px;
                 font-size: 16px;
+            }
+
+            .profile-container {
+                padding: 20px;
+                margin: 0 15px;
+            }
+
+            .profile-title {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+
+            .profile-value {
+                font-size: 20px;
+                padding: 12px;
+            }
+
+            .profile-role {
+                font-size: 18px;
+                padding: 10px 20px;
             }
 
             .payment-content {
@@ -642,28 +724,23 @@
                 font-size: 16px;
             }
 
+            .nav-panel {
+                top: 8px;
+                gap: 8px;
+            }
+
+            .nav-button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+
             .modal-content {
                 padding: 25px 20px;
             }
 
-            .user-info {
-                top: 10px;
-                right: 10px;
-            }
-
-            .user-label {
-                font-size: 12px;
-            }
-
-            .user-box {
-                padding: 8px 12px;
-                font-size: 12px;
-            }
-
-            .products-container {
+            .main-content {
                 top: 80px;
-                left: 10px;
-                flex-direction: column;
+                padding: 10px;
             }
 
             .product-card {
@@ -697,6 +774,22 @@
                 font-size: 14px;
             }
 
+            .profile-container {
+                padding: 15px;
+            }
+
+            .profile-title {
+                font-size: 20px;
+            }
+
+            .profile-value {
+                font-size: 18px;
+            }
+
+            .profile-role {
+                font-size: 16px;
+            }
+
             .payment-content {
                 padding: 25px 20px;
             }
@@ -724,13 +817,69 @@
         <button class="start-button" id="startButton">Начать</button>
     </div>
 
+    <!-- Навигационная панель -->
+    <div class="nav-panel" id="navPanel">
+        <button class="nav-button" id="productsButton">ТОВАРЫ</button>
+        <button class="nav-button" id="profileButton">Профиль</button>
+    </div>
+
+    <!-- Основной контент после регистрации -->
+    <div class="main-content" id="mainContent">
+        <!-- Контейнер для товаров -->
+        <div class="products-container" id="productsContainer">
+            <!-- Карточка товара Лабуба -->
+            <div class="product-card">
+                <img src="Labu.png.png" alt="Лабуба игрушка брелок" class="product-image">
+                <div class="product-name">Лабуба игрушка брелок</div>
+                <div class="product-price">
+                    <span class="product-price-old">400₽</span>
+                    <span class="product-price-new">336₽</span>
+                </div>
+                <button class="buy-button" data-product="Лабуба игрушка брелок">Купить</button>
+            </div>
+
+            <!-- Карточка товара Пластилин -->
+            <div class="product-card">
+                <img src="Plas.png.png" alt="Пластилин воздушный Липляндия, 60 штук" class="product-image">
+                <div class="product-name">Пластилин воздушный Липляндия, 60 штук</div>
+                <div class="product-price">
+                    <span class="product-price-new">292₽</span>
+                </div>
+                <button class="buy-button" data-product="Пластилин воздушный Липляндия, 60 штук">Купить</button>
+            </div>
+
+            <!-- Карточка товара Повторюшка Кактус -->
+            <div class="product-card">
+                <img src="Gyp.png" alt="Повторюшка Кактус" class="product-image">
+                <div class="product-name">Повторюшка Кактус</div>
+                <div class="product-price">
+                    <span class="product-price-new">550₽</span>
+                </div>
+                <button class="buy-button" data-product="Повторюшка Кактус">Купить</button>
+            </div>
+        </div>
+
+        <!-- Контейнер профиля -->
+        <div class="profile-container" id="profileContainer" style="display: none;">
+            <div class="profile-title">Профиль пользователя</div>
+            <div class="profile-info">
+                <div class="profile-label">Твой номер:</div>
+                <div class="profile-value" id="profilePhone"></div>
+            </div>
+            <div class="profile-info">
+                <div class="profile-label">Статус:</div>
+                <div class="profile-role" id="profileRole">ЧЕЛОВЕК</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Модальное окно регистрации -->
     <div class="modal" id="modal">
         <div class="modal-content">
             <form id="registrationForm">
                 <div class="form-group">
                     <label for="phoneNumber">Введите номер</label>
-                    <input type="text" id="phoneNumber" name="phoneNumber" placeholder="Номер телефона">
+                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Номер телефона" inputmode="numeric">
                     <div class="error-message" id="phoneError">Поле не может быть пустым</div>
                 </div>
                 <div class="form-group">
@@ -740,36 +889,6 @@
                 </div>
                 <button type="submit" class="submit-button">Начать</button>
             </form>
-        </div>
-    </div>
-
-    <!-- Информация о человеке в углу -->
-    <div class="user-info" id="userInfo">
-        <div class="user-label" id="userLabel">Номер человека</div>
-        <div class="user-box" id="userBox">ЧЕЛОВЕК</div>
-    </div>
-
-    <!-- Контейнер для товаров -->
-    <div class="products-container" id="productsContainer">
-        <!-- Карточка товара Лабуба -->
-        <div class="product-card">
-            <img src="Labu.png.png" alt="Лабуба игрушка брелок" class="product-image">
-            <div class="product-name">Лабуба игрушка брелок</div>
-            <div class="product-price">
-                <span class="product-price-old">400₽</span>
-                <span class="product-price-new">336₽</span>
-            </div>
-            <button class="buy-button" data-product="Лабуба игрушка брелок">Купить</button>
-        </div>
-
-        <!-- Карточка товара Пластилин -->
-        <div class="product-card">
-            <img src="Plas.png.png" alt="Пластилин воздушный Липляндия, 60 штук" class="product-image">
-            <div class="product-name">Пластилин воздушный Липляндия, 60 штук</div>
-            <div class="product-price">
-                <span class="product-price-new">292₽</span>
-            </div>
-            <button class="buy-button" data-product="Пластилин воздушный Липляндия, 60 штук">Купить</button>
         </div>
     </div>
 
@@ -792,10 +911,16 @@
         const container = document.getElementById('container');
         const title = document.getElementById('title');
         const startButton = document.getElementById('startButton');
+        const navPanel = document.getElementById('navPanel');
+        const productsButton = document.getElementById('productsButton');
+        const profileButton = document.getElementById('profileButton');
+        const mainContent = document.getElementById('mainContent');
+        const productsContainer = document.getElementById('productsContainer');
+        const profileContainer = document.getElementById('profileContainer');
 
-        let ballTop = 50; // начальная позиция в процентах
-        let direction = 'down'; // направление движения
-        let animationSpeed = 0.8; // скорость анимации (медленнее)
+        let ballTop = 50;
+        let direction = 'down';
+        let animationSpeed = 0.8;
         let bottomTouched = false;
         let topTouched = false;
         let animationId;
@@ -820,13 +945,11 @@
                         topTouched = true;
                         container.style.background = 'linear-gradient(to bottom, #ff0000 0%, #ff0000 50%, #ffd700 50%, #ffd700 100%)';
                     }
-                    // Останавливаем шар в центре
                     setTimeout(() => {
                         ballTop = 50;
                         ball.style.top = ballTop + '%';
                         ball.style.transition = 'top 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
                         setTimeout(() => {
-                            // Шар исчезает когда начинает появляться надпись
                             ball.classList.add('fade-out');
                             setTimeout(() => {
                                 title.classList.add('visible');
@@ -845,103 +968,95 @@
             animationId = requestAnimationFrame(animate);
         }
 
-        // Запускаем анимацию
         animate();
 
-        // Обработка кнопки "Начать"
         const modal = document.getElementById('modal');
         const registrationForm = document.getElementById('registrationForm');
         const phoneInput = document.getElementById('phoneNumber');
         const passwordInput = document.getElementById('password');
         const phoneError = document.getElementById('phoneError');
         const passwordError = document.getElementById('passwordError');
-        const userInfo = document.getElementById('userInfo');
-        const userBox = document.getElementById('userBox');
-        const userLabel = document.getElementById('userLabel');
+        const profilePhone = document.getElementById('profilePhone');
+        const profileRole = document.getElementById('profileRole');
 
-        // Функция для получения данных из localStorage
         function getAccounts() {
             const accounts = localStorage.getItem('accounts');
             return accounts ? JSON.parse(accounts) : {};
         }
 
-        // Функция для сохранения данных в localStorage
         function saveAccount(phone, password) {
             const accounts = getAccounts();
             accounts[phone] = password;
             localStorage.setItem('accounts', JSON.stringify(accounts));
         }
 
-        // Функция для проверки существующего аккаунта
         function checkAccount(phone, password) {
             const accounts = getAccounts();
             if (accounts[phone]) {
                 return accounts[phone] === password;
             }
-            return null; // Аккаунт не существует
+            return null;
         }
 
-        // Функция для отображения информации о пользователе
-        function showUserInfo(phone) {
-            userLabel.textContent = phone;
+        function showProfileInfo(phone) {
+            profilePhone.textContent = phone;
             
-            // Проверка на админа и тестера
             if (phone === '79096459416') {
-                userBox.textContent = 'АДМИН';
-                userBox.classList.add('admin');
-                userBox.classList.remove('tester');
+                profileRole.textContent = 'АДМИН';
+                profileRole.className = 'profile-role admin';
             } else if (phone === '79295999533' || phone === '9295999533') {
-                userBox.textContent = 'ТЕСТЕР';
-                userBox.classList.add('tester');
-                userBox.classList.remove('admin');
+                profileRole.textContent = 'МОДЕР';
+                profileRole.className = 'profile-role moder';
             } else {
-                userBox.textContent = 'ЧЕЛОВЕК';
-                userBox.classList.remove('admin');
-                userBox.classList.remove('tester');
+                profileRole.textContent = 'ЧЕЛОВЕК';
+                profileRole.className = 'profile-role user';
             }
-            
-            userInfo.classList.add('visible');
         }
 
-        // Функция для показа интерфейса после регистрации
         function showPostRegistrationUI() {
-            // Перемещаем название в угол
-            title.style.display = 'block';
             title.classList.add('moved');
-            title.style.opacity = '1';
-            title.style.visibility = 'visible';
-            
-            // Скрываем кнопку "Начать"
             startButton.style.opacity = '0';
             startButton.style.pointerEvents = 'none';
             startButton.style.visibility = 'hidden';
             
-            // Показываем товары
-            setTimeout(() => {
-                const productsContainer = document.getElementById('productsContainer');
-                productsContainer.classList.add('visible');
-            }, 500);
+            navPanel.classList.add('visible');
+            mainContent.classList.add('visible');
+            
+            document.body.style.overflow = 'auto';
+            container.style.overflow = 'auto';
+            
+            showProductsView();
         }
 
-        // Проверка при загрузке страницы, есть ли сохраненный пользователь
+        function showProductsView() {
+            productsContainer.style.display = 'flex';
+            profileContainer.style.display = 'none';
+            productsButton.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)';
+            profileButton.style.background = '#666';
+        }
+
+        function showProfileView() {
+            productsContainer.style.display = 'none';
+            profileContainer.style.display = 'block';
+            productsButton.style.background = '#666';
+            profileButton.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)';
+        }
+
         window.addEventListener('load', () => {
             const savedPhone = localStorage.getItem('currentUser');
             if (savedPhone) {
-                // Останавливаем анимацию мяча
                 cancelAnimationFrame(animationId);
                 ball.style.display = 'none';
                 title.style.display = 'none';
                 startButton.style.display = 'none';
                 
-                showUserInfo(savedPhone);
-                // Меняем фон после регистрации (красный сверху, желтый снизу)
+                showProfileInfo(savedPhone);
                 container.style.background = 'linear-gradient(to bottom, #ff0000 0%, #ff0000 50%, #ffd700 50%, #ffd700 100%)';
                 showPostRegistrationUI();
             }
         });
 
         startButton.addEventListener('click', () => {
-            // Очищаем поля при открытии
             phoneInput.value = '';
             passwordInput.value = '';
             phoneInput.classList.remove('error');
@@ -951,7 +1066,6 @@
             modal.classList.add('visible');
         });
 
-        // Валидация и отправка формы
         registrationForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
@@ -959,13 +1073,11 @@
             const phone = phoneInput.value.trim();
             const password = passwordInput.value.trim();
             
-            // Сброс ошибок
             phoneInput.classList.remove('error');
             passwordInput.classList.remove('error');
             phoneError.classList.remove('visible');
             passwordError.classList.remove('visible');
 
-            // Проверка номера
             if (!phone) {
                 phoneInput.classList.add('error');
                 phoneError.textContent = 'Поле не может быть пустым';
@@ -973,7 +1085,6 @@
                 isValid = false;
             }
 
-            // Проверка пароля
             if (!password) {
                 passwordInput.classList.add('error');
                 passwordError.textContent = 'Поле не может быть пустым';
@@ -983,57 +1094,46 @@
 
             if (!isValid) return;
 
-            // Проверяем существующий аккаунт
             const accountExists = checkAccount(phone, password);
             
             if (accountExists === null) {
-                // Аккаунт не существует - создаем новый
                 saveAccount(phone, password);
                 localStorage.setItem('currentUser', phone);
                 
-                // Закрываем модальное окно
                 modal.style.animation = 'fadeIn 0.5s ease reverse';
                 setTimeout(() => {
                     modal.classList.remove('visible');
                     modal.style.animation = '';
                 }, 500);
 
-                // Меняем фон после регистрации (красный сверху, желтый снизу)
                 container.style.background = 'linear-gradient(to bottom, #ff0000 0%, #ff0000 50%, #ffd700 50%, #ffd700 100%)';
 
-                // Показываем информацию о пользователе и интерфейс
                 setTimeout(() => {
-                    showUserInfo(phone);
+                    showProfileInfo(phone);
                     showPostRegistrationUI();
                 }, 300);
             } else if (accountExists === true) {
-                // Пароль правильный - вход
                 localStorage.setItem('currentUser', phone);
                 
-                // Закрываем модальное окно
                 modal.style.animation = 'fadeIn 0.5s ease reverse';
                 setTimeout(() => {
                     modal.classList.remove('visible');
                     modal.style.animation = '';
                 }, 500);
 
-                // Меняем фон после регистрации (красный сверху, желтый снизу)
                 container.style.background = 'linear-gradient(to bottom, #ff0000 0%, #ff0000 50%, #ffd700 50%, #ffd700 100%)';
 
-                // Показываем информацию о пользователе и интерфейс
                 setTimeout(() => {
-                    showUserInfo(phone);
+                    showProfileInfo(phone);
                     showPostRegistrationUI();
                 }, 300);
             } else {
-                // Пароль неправильный
                 passwordInput.classList.add('error');
                 passwordError.textContent = 'Неверный пароль';
                 passwordError.classList.add('visible');
             }
         });
 
-        // Убираем ошибки при вводе
         phoneInput.addEventListener('input', () => {
             if (phoneInput.value.trim()) {
                 phoneInput.classList.remove('error');
@@ -1048,14 +1148,14 @@
             }
         });
 
-        // Обработчик кнопок "Купить" для всех товаров
+        productsButton.addEventListener('click', showProductsView);
+        profileButton.addEventListener('click', showProfileView);
+
         const paymentModal = document.getElementById('paymentModal');
         const telegramButton = document.getElementById('telegramButton');
         const phoneButton = document.getElementById('phoneButton');
         const paymentMessage = document.getElementById('paymentMessage');
-        const productsContainer = document.getElementById('productsContainer');
 
-        // Используем делегирование событий для всех кнопок "Купить"
         productsContainer.addEventListener('click', (e) => {
             if (e.target.classList.contains('buy-button')) {
                 const productName = e.target.getAttribute('data-product');
@@ -1063,27 +1163,20 @@
             }
         });
 
-        // Обработчик кнопки "Телеграмм"
         telegramButton.addEventListener('click', () => {
             window.open('https://t.me/Meomenanz', '_blank');
             paymentModal.classList.remove('visible');
         });
 
-        // Обработчик кнопки "+7 909 645 94 16"
         phoneButton.addEventListener('click', () => {
-            // Показываем сообщение
             paymentMessage.classList.add('visible');
-            
-            // Закрываем модальное окно
             paymentModal.classList.remove('visible');
             
-            // Закрываем сообщение через 2 секунды
             setTimeout(() => {
                 paymentMessage.classList.remove('visible');
             }, 2000);
         });
 
-        // Обработка ошибки загрузки изображения для всех товаров
         const productImages = document.querySelectorAll('.product-image');
         productImages.forEach((image) => {
             image.addEventListener('error', () => {
@@ -1104,4 +1197,3 @@
     </script>
 </body>
 </html>
-
