@@ -361,12 +361,18 @@
 
         /* Стили для товара */
         .product-card {
-            width: 300px;
+            width: 320px;
             background: white;
             border-radius: 15px;
             padding: 20px;
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
         }
 
         .product-image {
@@ -379,10 +385,18 @@
         }
 
         .product-name {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: #333;
             margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .product-description {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.3;
         }
 
         .product-price {
@@ -396,7 +410,7 @@
         }
 
         .product-price-old {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 500;
             color: #999;
             text-decoration: line-through;
@@ -698,7 +712,7 @@
 
             .product-card {
                 width: 90%;
-                max-width: 300px;
+                max-width: 320px;
                 padding: 15px;
             }
 
@@ -707,7 +721,11 @@
             }
 
             .product-name {
-                font-size: 16px;
+                font-size: 15px;
+            }
+
+            .product-description {
+                font-size: 13px;
             }
 
             .product-price {
@@ -833,6 +851,10 @@
                 font-size: 14px;
             }
 
+            .product-description {
+                font-size: 12px;
+            }
+
             .product-price {
                 font-size: 18px;
                 gap: 6px;
@@ -913,6 +935,18 @@
     <div class="main-content" id="mainContent">
         <!-- Контейнер для товаров -->
         <div class="products-container" id="productsContainer">
+            <!-- Карточка товара iPhone 16 -->
+            <div class="product-card">
+                <img src="iphone16.png" alt="Apple iPhone 16" class="product-image">
+                <div class="product-name">Apple Смартфон iPhone 16 - SIM+eSIM</div>
+                <div class="product-description">Новый, не активирован, Face Time работает, eSIM поддерживается - Global 128 ГБ, черный</div>
+                <div class="product-price">
+                    <span class="product-price-old">67 000₽</span>
+                    <span class="product-price-new">54 699₽</span>
+                </div>
+                <button class="buy-button" data-product="Apple iPhone 16 128GB Black">Купить</button>
+            </div>
+
             <!-- Карточка товара Лабуба -->
             <div class="product-card">
                 <img src="Labu.png.png" alt="Лабуба игрушка брелок" class="product-image">
