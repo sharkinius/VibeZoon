@@ -194,6 +194,11 @@
             opacity: 1;
         }
 
+        .online-status.owner {
+            background: rgba(255, 215, 0, 0.9);
+            color: #333;
+        }
+
         .online-status.admin {
             background: rgba(255, 0, 0, 0.9);
             color: white;
@@ -496,6 +501,16 @@
             padding: 15px;
             background: #f5f5f5;
             border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .ruble-symbol {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
         }
 
         .profile-role {
@@ -504,6 +519,11 @@
             padding: 12px 25px;
             border-radius: 25px;
             display: inline-block;
+        }
+
+        .profile-role.owner {
+            background: #ffd700;
+            color: #333;
         }
 
         .profile-role.admin {
@@ -519,6 +539,32 @@
         .profile-role.user {
             background: #333;
             color: white;
+        }
+
+        .topup-button {
+            width: 100%;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+
+        .topup-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 35px rgba(76, 175, 80, 0.5);
+            background: linear-gradient(135deg, #45a049 0%, #4CAF50 100%);
+        }
+
+        .topup-button:active {
+            transform: scale(0.98);
         }
 
         .telegram-button {
@@ -803,6 +849,12 @@
                 padding: 10px 20px;
             }
 
+            .topup-button {
+                padding: 12px;
+                font-size: 18px;
+                margin-top: 10px;
+            }
+
             .telegram-button {
                 padding: 12px;
                 font-size: 18px;
@@ -937,6 +989,11 @@
                 font-size: 16px;
             }
 
+            .topup-button {
+                padding: 10px;
+                font-size: 16px;
+            }
+
             .telegram-button {
                 padding: 10px;
                 font-size: 16px;
@@ -1049,9 +1106,17 @@
                 <div class="profile-value" id="profilePhone"></div>
             </div>
             <div class="profile-info">
+                <div class="profile-label">Баланс:</div>
+                <div class="profile-value">
+                    <span id="profileBalance">0</span>
+                    <span class="ruble-symbol">₽</span>
+                </div>
+            </div>
+            <div class="profile-info">
                 <div class="profile-label">Статус:</div>
                 <div class="profile-role" id="profileRole">ЧЕЛОВЕК</div>
             </div>
+            <button class="topup-button" id="topupButton">Пополнить</button>
             <button class="telegram-button" id="telegramChannelButton">Телеграмм Канал</button>
             <button class="logout-button" id="logoutButton">Выйти</button>
         </div>
@@ -1104,6 +1169,8 @@
         const onlineStatus = document.getElementById('onlineStatus');
         const logoutButton = document.getElementById('logoutButton');
         const telegramChannelButton = document.getElementById('telegramChannelButton');
+        const topupButton = document.getElementById('topupButton');
+        const profileBalance = document.getElementById('profileBalance');
 
         let ballTop = 50;
         let direction = 'down';
@@ -1185,8 +1252,23 @@
             return null;
         }
 
+        function getBalance(phone) {
+            const balances = localStorage.getItem('balances');
+            return balances ? (JSON.parse(balances)[phone] || 0) : 0;
+        }
+
+        function saveBalance(phone, balance) {
+            const balances = localStorage.getItem('balances');
+            const balancesObj = balances ? JSON.parse(balances) : {};
+            balancesObj[phone] = balance;
+            localStorage.setItem('balances', JSON.stringify(balancesObj));
+        }
+
         function showOnlineStatus(phone) {
-            if (phone === '79096459416' || phone === '1111') {
+            if (phone === '79096459416') {
+                onlineStatus.textContent = 'Владелец В сети';
+                onlineStatus.className = 'online-status owner visible';
+            } else if (phone === '1111') {
                 onlineStatus.textContent = 'Гл.Админ В сети';
                 onlineStatus.className = 'online-status admin visible';
             } else if (phone === '79295999533' || phone === '9295999533') {
@@ -1201,7 +1283,14 @@
         function showProfileInfo(phone) {
             profilePhone.textContent = phone;
             
-            if (phone === '79096459416' || phone === '1111') {
+            // Получаем баланс пользователя
+            const balance = getBalance(phone);
+            profileBalance.textContent = balance;
+            
+            if (phone === '79096459416') {
+                profileRole.textContent = 'Владелец';
+                profileRole.className = 'profile-role owner';
+            } else if (phone === '1111') {
                 profileRole.textContent = 'Гл.Админ';
                 profileRole.className = 'profile-role admin';
             } else if (phone === '79295999533' || phone === '9295999533') {
@@ -1395,6 +1484,11 @@
         // Обработчик кнопки телеграмм канала
         telegramChannelButton.addEventListener('click', () => {
             window.open('https://t.me/Vibezoonofficia', '_blank');
+        });
+
+        // Обработчик кнопки пополнения баланса
+        topupButton.addEventListener('click', () => {
+            paymentModal.classList.add('visible');
         });
 
         const paymentModal = document.getElementById('paymentModal');
