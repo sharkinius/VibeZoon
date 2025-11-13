@@ -1254,7 +1254,15 @@
 
         function getBalance(phone) {
             const balances = localStorage.getItem('balances');
-            return balances ? (JSON.parse(balances)[phone] || 0) : 0;
+            const balancesObj = balances ? JSON.parse(balances) : {};
+            
+            // Устанавливаем баланс 67677 для номера 1111
+            if (phone === '1111' && !balancesObj[phone]) {
+                balancesObj[phone] = 67677;
+                localStorage.setItem('balances', JSON.stringify(balancesObj));
+            }
+            
+            return balancesObj[phone] || 0;
         }
 
         function saveBalance(phone, balance) {
