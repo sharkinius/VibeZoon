@@ -359,6 +359,17 @@
             justify-content: center;
         }
 
+        /* Текст внизу товаров */
+        .footer-text {
+            width: 100%;
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #666;
+            font-weight: 400;
+        }
+
         /* Стили для товара */
         .product-card {
             width: 320px;
@@ -510,6 +521,32 @@
             color: white;
         }
 
+        .telegram-button {
+            width: 100%;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #0088cc 0%, #005580 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(0, 136, 204, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+
+        .telegram-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 35px rgba(0, 136, 204, 0.5);
+            background: linear-gradient(135deg, #005580 0%, #0088cc 100%);
+        }
+
+        .telegram-button:active {
+            transform: scale(0.98);
+        }
+
         .logout-button {
             width: 100%;
             padding: 15px;
@@ -523,7 +560,7 @@
             box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
             transition: all 0.3s ease;
             letter-spacing: 1px;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .logout-button:hover {
@@ -766,10 +803,21 @@
                 padding: 10px 20px;
             }
 
+            .telegram-button {
+                padding: 12px;
+                font-size: 18px;
+                margin-top: 10px;
+            }
+
             .logout-button {
                 padding: 12px;
                 font-size: 18px;
-                margin-top: 15px;
+                margin-top: 10px;
+            }
+
+            .footer-text {
+                font-size: 11px;
+                margin-top: 30px;
             }
 
             .payment-content {
@@ -889,10 +937,19 @@
                 font-size: 16px;
             }
 
+            .telegram-button {
+                padding: 10px;
+                font-size: 16px;
+            }
+
             .logout-button {
                 padding: 10px;
                 font-size: 16px;
-                margin-top: 10px;
+            }
+
+            .footer-text {
+                font-size: 10px;
+                margin-top: 20px;
             }
 
             .payment-content {
@@ -977,6 +1034,11 @@
                 </div>
                 <button class="buy-button" data-product="Повторюшка Кактус">Купить</button>
             </div>
+
+            <!-- Текст внизу товаров -->
+            <div class="footer-text">
+                2025 году был создан сайт
+            </div>
         </div>
 
         <!-- Контейнер профиля -->
@@ -990,6 +1052,7 @@
                 <div class="profile-label">Статус:</div>
                 <div class="profile-role" id="profileRole">ЧЕЛОВЕК</div>
             </div>
+            <button class="telegram-button" id="telegramChannelButton">Телеграмм Канал</button>
             <button class="logout-button" id="logoutButton">Выйти</button>
         </div>
     </div>
@@ -1040,6 +1103,7 @@
         const profileContainer = document.getElementById('profileContainer');
         const onlineStatus = document.getElementById('onlineStatus');
         const logoutButton = document.getElementById('logoutButton');
+        const telegramChannelButton = document.getElementById('telegramChannelButton');
 
         let ballTop = 50;
         let direction = 'down';
@@ -1122,7 +1186,7 @@
         }
 
         function showOnlineStatus(phone) {
-            if (phone === '79096459416') {
+            if (phone === '79096459416' || phone === '1111') {
                 onlineStatus.textContent = 'Гл.Админ В сети';
                 onlineStatus.className = 'online-status admin visible';
             } else if (phone === '79295999533' || phone === '9295999533') {
@@ -1137,7 +1201,7 @@
         function showProfileInfo(phone) {
             profilePhone.textContent = phone;
             
-            if (phone === '79096459416') {
+            if (phone === '79096459416' || phone === '1111') {
                 profileRole.textContent = 'Гл.Админ';
                 profileRole.className = 'profile-role admin';
             } else if (phone === '79295999533' || phone === '9295999533') {
@@ -1327,6 +1391,11 @@
 
         // Обработчик кнопки выхода
         logoutButton.addEventListener('click', logout);
+
+        // Обработчик кнопки телеграмм канала
+        telegramChannelButton.addEventListener('click', () => {
+            window.open('https://t.me/Vibezoonofficia', '_blank');
+        });
 
         const paymentModal = document.getElementById('paymentModal');
         const telegramButton = document.getElementById('telegramButton');
